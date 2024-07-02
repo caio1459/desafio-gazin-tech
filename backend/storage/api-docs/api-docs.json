@@ -1,0 +1,510 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tech Dev API",
+        "description": "API desenvolvida para o desafio da Gazin-tech",
+        "contact": {
+            "email": "caiogrechic50@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/desenvolvedores": {
+            "get": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Lista todos os desenvolvedores",
+                "description": "Retorna uma lista paginada de desenvolvedores",
+                "operationId": "a7c961d6a0cc60c65d325397006c6273",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Número de itens por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Campo que vai ser ordenado",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Ordenação crescente (asc) ou descrescente (desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Filtra pelo id do desenvolvedor",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "description": "Filtra pelo nome do desenvolvedor",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de desenvolvedores",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Desenvolvedor"
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Cria um novo desenvolvedor",
+                "description": "Cria um novo desenvolvedor",
+                "operationId": "87560cc2999c3892c8fd41edf306fdf7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Desenvolvedor"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Desenvolvedor criado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Desenvolvedor"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    }
+                }
+            }
+        },
+        "/api/desenvolvedores/{id}": {
+            "get": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Retorna um desenvolvedor específico",
+                "description": "Retorna os dados de um desenvolvedor específico",
+                "operationId": "d6961ab70601db87b4dac05e7308e029",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do desenvolvedor",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dados do desenvolvedor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Desenvolvedor"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Desenvolvedor não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Atualiza um desenvolvedor existente",
+                "description": "Atualiza os dados de um desenvolvedor existente",
+                "operationId": "99f2fc9def57edfa1388ab9010cfba6a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do desenvolvedor",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Desenvolvedor"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Desenvolvedor atualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Desenvolvedor"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Desenvolvedor não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Exclui um desenvolvedor",
+                "description": "Exclui um desenvolvedor existente",
+                "operationId": "d436c219b6508203518a192efce7e64e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do desenvolvedor",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Desenvolvedor excluído com sucesso"
+                    },
+                    "404": {
+                        "description": "Desenvolvedor não encontrado"
+                    }
+                }
+            }
+        },
+        "/api/niveis": {
+            "get": {
+                "tags": [
+                    "Níveis"
+                ],
+                "summary": "Lista todos os níveis",
+                "description": "Retorna uma lista paginada de níveis",
+                "operationId": "6140b32b4101ddf8d0a4727623b0f416",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Número de itens por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Campo que vai ser ordenado",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Ordenação crescente (asc) ou descrescente (desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Filtra pelo id do nível",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "nivel",
+                        "in": "query",
+                        "description": "Filtra pela descrição do nível",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de níveis",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Nivel"
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Níveis"
+                ],
+                "summary": "Cria um novo nível",
+                "description": "Cria um novo nível",
+                "operationId": "d1f74a9801a03f14ac3a6946d1f82665",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Nivel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Nível criado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Nivel"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    }
+                }
+            }
+        },
+        "/api/niveis/{id}": {
+            "put": {
+                "tags": [
+                    "Níveis"
+                ],
+                "summary": "Atualiza um nível existente",
+                "description": "Atualiza os dados de um nível existente",
+                "operationId": "568991870562c9f98493988d7b1570fe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do nível",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Nivel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Nível atualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Nivel"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nível não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Níveis"
+                ],
+                "summary": "Exclui um nível",
+                "description": "Exclui um nível existente",
+                "operationId": "312d2ed31754dda700deb1d0f7b42000",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do nível",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Nível excluído com sucesso"
+                    },
+                    "400": {
+                        "description": "Nível associado a desenvolvedores, não pode ser excluído"
+                    },
+                    "404": {
+                        "description": "Nível não encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Desenvolvedor": {
+                "title": "Desenvolvedor",
+                "required": [
+                    "nome",
+                    "hobby",
+                    "nivel_id",
+                    "sexo",
+                    "data_nascimento"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID do desenvolvedor",
+                        "type": "integer"
+                    },
+                    "nome": {
+                        "description": "Nome do desenvolvedor",
+                        "type": "string"
+                    },
+                    "hobby": {
+                        "description": "Hobby do desenvolvedor",
+                        "type": "string"
+                    },
+                    "sexo": {
+                        "description": "Sexo do desenvolvedor",
+                        "type": "string"
+                    },
+                    "data_nascimento": {
+                        "description": "Data de nascimento do desenvolvedor",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "nivel_id": {
+                        "description": "ID do nível do desenvolvedor",
+                        "type": "integer"
+                    },
+                    "idade": {
+                        "description": "Idade do desenvolvedor",
+                        "type": "integer",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Nivel": {
+                "title": "Nivel",
+                "required": [
+                    "nivel"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID do nível",
+                        "type": "integer"
+                    },
+                    "nivel": {
+                        "description": "Nome do nível",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
