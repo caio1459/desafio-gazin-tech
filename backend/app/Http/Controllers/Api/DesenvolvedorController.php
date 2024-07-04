@@ -89,7 +89,27 @@ class DesenvolvedorController extends Controller
      *             ),
      *             @OA\Property(
      *                 property="meta",
-     *                 type="object"
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="total",
+     *                     type="integer",
+     *                     example=1
+     *                 ),
+     *                 @OA\Property(
+     *                     property="per_page",
+     *                     type="integer",
+     *                     example=2
+     *                 ),
+     *                 @OA\Property(
+     *                     property="current_page",
+     *                     type="integer",
+     *                     example=1
+     *                 ),
+     *                 @OA\Property(
+     *                     property="last_page",
+     *                     type="integer",
+     *                     example=1
+     *                 )
      *             )
      *         )
      *     ),
