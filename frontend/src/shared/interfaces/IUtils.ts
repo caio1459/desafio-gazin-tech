@@ -4,3 +4,8 @@ export interface IMeta {
   current_page: number;
   last_page: number;
 }
+
+export interface IError {
+  message: string;
+  errors: {};
+}

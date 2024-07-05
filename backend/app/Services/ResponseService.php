@@ -13,11 +13,4 @@ class ResponseService
             $title => $message
         ], $statusCode);
     }
-
-    public function vericarRetorno(int $count)
-    {
-        if ($count == 0) {
-            throw new CustomRequestException('Nenhum dado encontrado', 404);
-        }
-    }
 }

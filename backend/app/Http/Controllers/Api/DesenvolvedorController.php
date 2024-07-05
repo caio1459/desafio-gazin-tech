@@ -43,7 +43,7 @@ class DesenvolvedorController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
-     *         name="per_page",
+     *         name="itens",
      *         in="query",
      *         description="Número de itens por página",
      *         required=false,
@@ -123,10 +123,9 @@ class DesenvolvedorController extends Controller
     {
         $query = Desenvolvedor::with('nivel');
         $camposFiltrados = ['id', 'nome', 'hobby', 'sexo', 'nivel_id'];
-        $result = $this->paginationService->paginate($request, $query, $camposFiltrados);
 
         try {
-            $this->responseService->vericarRetorno(count($result['data']));
+            $result = $this->paginationService->paginate($request, $query, $camposFiltrados);
             return response()->json([
                 'data' => DesenvolvedorResource::collection(collect($result['data'])),
                 'meta' => $result['meta'],

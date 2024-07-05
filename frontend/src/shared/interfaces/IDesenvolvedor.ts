@@ -1,4 +1,5 @@
-import { IMeta } from "./IMeta";
+import { IMeta } from "./IUtils";
+import { INivel } from "./INivel";
 
 export interface IDesenvolvedorRes {
   data: IDesenvolvedor[];
@@ -11,6 +12,6 @@ export interface IDesenvolvedor {
   hobby: string;
   sexo: string;
   data_nascimento: Date;
-  nivel_id: number;
+  nivel: INivel;
   idade: number;
 }

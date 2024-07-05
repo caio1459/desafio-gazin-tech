@@ -1,4 +1,4 @@
-import { IMeta } from "./IMeta";
+import { IMeta } from "./IUtils";
 
 export interface INivelRes {
   data: INivel[];

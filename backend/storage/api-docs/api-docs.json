@@ -28,7 +28,7 @@
                         }
                     },
                     {
-                        "name": "per_page",
+                        "name": "itens",
                         "in": "query",
                         "description": "Número de itens por página",
                         "required": false,
@@ -278,7 +278,7 @@
                         }
                     },
                     {
-                        "name": "per_page",
+                        "name": "itens",
                         "in": "query",
                         "description": "Número de itens por página",
                         "required": false,

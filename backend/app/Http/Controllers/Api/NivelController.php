@@ -43,7 +43,7 @@ class NivelController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
-     *         name="per_page",
+     *         name="itens",
      *         in="query",
      *         description="Número de itens por página",
      *         required=false,
@@ -126,7 +126,7 @@ class NivelController extends Controller
         $result = $this->paginationService->paginate($request, $query, $camposFiltrados);
 
         try {
-            $this->responseService->vericarRetorno(count($result['data']));
+            $result = $this->paginationService->paginate($request, $query, $camposFiltrados);
             return response()->json([
                 'data' => NivelResource::collection(collect($result['data'])),
                 'meta' => $result['meta'],
