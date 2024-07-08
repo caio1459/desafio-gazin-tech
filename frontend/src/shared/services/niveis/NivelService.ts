@@ -1,44 +1,48 @@
 import { INivel, INivelRes } from "../../interfaces/INivel";
-import ApiConfig from "../api/ApiConfig";
+import BaseService from "../api/BaseService";
 import { ErroException } from "../api/ErrorException";
 
-class NivelService {
-  async getAll(page: number, itens: number, sort: string, order: string): Promise<INivelRes | ErroException> {
-    try {
-      const { data } = await ApiConfig.runApi().get(
-        `/niveis?page=${page}&itens=${itens}&sort=${sort}&order=${order}`
-      );
-      return data;
-    } catch (error: any) {
-      return new ErroException(error.message || "Erro ao listar niveis");
-    }
+class NivelService extends BaseService<INivel, INivelRes> {
+  constructor() {
+    super("niveis");
   }
 
-  async create(nivel: Omit<INivel, "id">): Promise<INivel | ErroException> {
-    try {
-      const { data } = await ApiConfig.runApi().post("/niveis", nivel);
-      return data;
-    } catch (error: any) {
-      return new ErroException(error.message || "Erro ao criar a nivel");
-    }
+  async getAllNiveis(
+    page: number,
+    itens: number,
+    sort: string,
+    order: string,
+    idFilter: string,
+    nivelFilter: string
+  ): Promise<INivelRes | ErroException> {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      itens: itens.toString(),
+      sort,
+      order,
+    });
+
+    if (idFilter) params.append("id", idFilter);
+    if (nivelFilter) params.append("nivel", nivelFilter);
+
+    return this.getAll(params);
   }
 
-  async update(nivel: INivel, id: string): Promise<INivel | ErroException> {
-    try {
-      const { data } = await ApiConfig.runApi().put(`/niveis/${id}`, nivel);
-      return data;
-    } catch (error: any) {
-      return new ErroException(error.message || "Erro ao atualizar a nivel");
-    }
+  async createNivel(
+    nivel: Omit<INivel, "id">
+  ): Promise<INivel | ErroException> {
+    return this.create(nivel);
   }
 
-  async delete(id: string): Promise<undefined | ErroException> {
-    try {
-      await ApiConfig.runApi().delete(`/niveis/${id}`);
-      return undefined;
-    } catch (error: any) {
-      return new ErroException(error.message || "Erro ao deletar a mivel");
-    }
+  async updateNivel(
+    nivel: INivel,
+    id: number
+  ): Promise<INivel | ErroException> {
+    return this.update(nivel, id);
+  }
+
+  async deleteNivel(id: number): Promise<void | ErroException> {
+    return this.delete(id);
   }
 }
 

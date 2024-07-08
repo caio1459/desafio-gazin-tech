@@ -2,6 +2,12 @@
 
 body {
   font-size: .875rem;
+  overflow: hidden;
+  /* Previne rolagem no body */
+}
+
+th {
+  cursor: pointer;
 }
 
 .feather {
@@ -83,4 +89,11 @@ body {
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.main-content {
+  height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 20px;
+  margin-top: 48px;
 }

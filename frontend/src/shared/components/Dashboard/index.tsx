@@ -21,13 +21,13 @@ export const Dashboard: React.FC<IDashboardProps> = ({ children }) => {
                 <NavItems linkTo={'/desenvolvedores'} title={'Desenvolvedores'}>
                   <i className="bi bi-code-slash"></i>
                 </NavItems>
-                <NavItems linkTo={'/niveis'} title={'Niveis'} >
+                <NavItems linkTo={'/niveis'} title={'Niveis'}>
                   <i className="bi bi-reception-4"></i>
                 </NavItems>
               </ul>
             </div>
           </nav>
-          <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
             {children}
           </main>
         </div>

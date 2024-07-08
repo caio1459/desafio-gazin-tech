@@ -19,7 +19,12 @@ class PaginationService
         // Aplica filtros
         foreach ($camposFiltrados as $campo) {
             if ($request->has($campo)) {
-                $query->where($campo, $request->input($campo));
+                $valor = $request->input($campo);
+                if (is_string($valor)) {
+                    $query->where($campo, 'LIKE', '%' . $valor . '%');
+                } else {
+                    $query->where($campo, $valor);
+                }
             }
         }
 

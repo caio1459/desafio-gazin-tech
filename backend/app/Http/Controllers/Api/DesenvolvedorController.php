@@ -77,6 +77,27 @@ class DesenvolvedorController extends Controller
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
+     *     @OA\Parameter(
+     *         name="hobby",
+     *         in="query",
+     *         description="Filtra pelo hobby do desenvolvedor",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="sexo",
+     *         in="query",
+     *         description="Filtra pelo sexo do desenvolvedor",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="nivel_id",
+     *         in="query",
+     *         description="Filtra pelo nivel do desenvolvedor",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Lista de desenvolvedores",
