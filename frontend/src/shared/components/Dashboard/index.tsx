@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
-import { Header } from '../Header';
-import { NavItems } from '../NavItems';
+import React, { ReactNode } from "react";
+import { Header } from "../Header";
+import { NavItems } from "../NavItems";
 
 interface IDashboardProps {
   children: ReactNode;
@@ -12,16 +12,19 @@ export const Dashboard: React.FC<IDashboardProps> = ({ children }) => {
       <Header />
       <div className="container-fluid">
         <div className="row">
-          <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+          <nav
+            id="sidebarMenu"
+            className="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse"
+          >
             <div className="position-sticky pt-3 sidebar-sticky">
               <ul className="nav flex-column">
-                <NavItems linkTo={'/'} title={'Dashboard'}>
+                <NavItems linkTo={"/"} title={"Dashboard"}>
                   <i className="bi bi-columns-gap"></i>
                 </NavItems>
-                <NavItems linkTo={'/desenvolvedores'} title={'Desenvolvedores'}>
+                <NavItems linkTo={"/desenvolvedores"} title={"Desenvolvedores"}>
                   <i className="bi bi-code-slash"></i>
                 </NavItems>
-                <NavItems linkTo={'/niveis'} title={'Niveis'}>
+                <NavItems linkTo={"/niveis"} title={"Niveis"}>
                   <i className="bi bi-reception-4"></i>
                 </NavItems>
               </ul>

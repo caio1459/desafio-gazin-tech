@@ -1,38 +1,74 @@
-import { Table } from "react-bootstrap"
+import { Table } from "react-bootstrap";
+import { useDevs } from "../../shared/hooks/useDevs";
+import { Filters } from "../../shared/components/Filters";
+import { Actions } from "../../shared/components/Actions";
+import { DevTableHeader, DevTableRow } from "../../shared/components/DevTable";
+import { IDesenvolvedor } from "../../shared/interfaces/IDesenvolvedor";
+import { Loading } from "../../shared/components/Loading";
+import { useState } from "react";
 
 export const Desenvolvedores = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const {
+    idFilter,
+    nomeFilter,
+    hobbyFilter,
+    sexoFilter,
+    nivelIdFilter,
+    setIdFilter,
+    setNomeFilter,
+    setHobbyFilter,
+    setSexoFilter,
+    setNivelIdFilter,
+    handleItemsPerPageChange,
+    handlePageChange,
+    handleSortChange,
+    itens,
+    page,
+    devRes,
+    isLoading,
+  } = useDevs();
+
   return (
-    <div className="container">
-      <h1>Desenvolvedores</h1>
-      <Table striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-        </thead>
+    <div className="container mt-1">
+      <Loading loading={isLoading || loading} />
+      <h1 className="mb-2">Desenvolvedores</h1>
+      <Filters
+        idFilter={idFilter}
+        nomeFilter={nomeFilter}
+        hobbyFilter={hobbyFilter}
+        sexoFilter={sexoFilter}
+        nivelIdFilter={nivelIdFilter}
+        setIdFilter={setIdFilter}
+        setNomeFilter={setNomeFilter}
+        setHobbyFilter={setHobbyFilter}
+        setSexoFilter={setSexoFilter}
+        setNivelIdFilter={setNivelIdFilter}
+        handleItemsPerPageChange={handleItemsPerPageChange}
+        itens={itens}
+      />
+
+      <Actions
+        handlePageChange={handlePageChange}
+        page={page}
+        textButton={"Cadastrar Desenvolvedor"}
+        entity="desenvolvedor"
+      />
+
+      <Table striped bordered responsive>
+        <DevTableHeader handleSortChange={handleSortChange} />
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {devRes?.data.map((dev: IDesenvolvedor) => (
+            <DevTableRow
+              key={dev.id}
+              desenvolvedor={dev}
+              handleEdit={() => {}}
+              handleDelete={() => {}}
+            />
+          ))}
         </tbody>
       </Table>
     </div>
-  )
-}
+  );
+};

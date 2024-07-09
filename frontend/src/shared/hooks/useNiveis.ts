@@ -8,6 +8,7 @@ export const useNiveis = () => {
   const [itens, setItens] = useState<number>(2);
   const [sort, setSort] = useState<string>("id");
   const [order, setOrder] = useState<string>("asc");
+  //Filtros personalizados
   const [idFilter, setIdFilter] = useState<string>("");
   const [nivelFilter, setNivelFilter] = useState<string>("");
   

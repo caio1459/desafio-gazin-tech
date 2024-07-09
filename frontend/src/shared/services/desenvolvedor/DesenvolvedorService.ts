@@ -10,7 +10,7 @@ class DesenvolvedorService extends BaseService<
   IDesenvolvedorRes
 > {
   constructor() {
-    super("/desenvolvedores");
+    super("desenvolvedores");
   }
 
   async getAllDevs(

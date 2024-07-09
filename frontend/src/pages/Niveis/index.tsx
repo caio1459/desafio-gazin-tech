@@ -1,14 +1,17 @@
 import { Table } from "react-bootstrap";
 import { Loading } from "../../shared/components/Loading";
-import { useState } from 'react';
+import { useState } from "react";
 import MessageService from "../../shared/services/messages/MessageService";
 import NivelService from "../../shared/services/niveis/NivelService";
 import { Filters } from "../../shared/components/Filters";
 import { Actions } from "../../shared/components/Actions";
 import { NivelModal } from "../../shared/components/NivelModal";
 import { INivel } from "../../shared/interfaces/INivel";
-import { TableHeader, TableRow } from "../../shared/components/NivelTable";
 import { useNiveis } from "../../shared/hooks/useNiveis";
+import {
+  NivelTableHeader,
+  NivelTableRow,
+} from "../../shared/components/NivelTable";
 
 export const Niveis = () => {
   const [nivelToEdit, setNivelToEdit] = useState<INivel | null>(null);
@@ -30,7 +33,7 @@ export const Niveis = () => {
     setNivelFilter,
     handleSortChange,
     handlePageChange,
-    handleItemsPerPageChange
+    handleItemsPerPageChange,
   } = useNiveis();
 
   const handleDelete = async (id: number) => {
@@ -40,7 +43,15 @@ export const Niveis = () => {
       "Nível deletado com sucesso!",
       async () => {
         await NivelService.deleteNivel(id);
-        await queryClient.invalidateQueries(['niveis', page, itens, sort, order, idFilter, nivelFilter]);
+        await queryClient.invalidateQueries([
+          "niveis",
+          page,
+          itens,
+          sort,
+          order,
+          idFilter,
+          nivelFilter,
+        ]);
       }
     ).finally(() => {
       setLoading(false);
@@ -54,7 +65,11 @@ export const Niveis = () => {
 
   return (
     <>
-      <NivelModal show={show} handleClose={handleClose} nivelToEdit={nivelToEdit} />
+      <NivelModal
+        show={show}
+        handleClose={handleClose}
+        nivelToEdit={nivelToEdit}
+      />
       <Loading loading={isLoading || loading} />
 
       <div className="container mt-1">
@@ -69,13 +84,18 @@ export const Niveis = () => {
           itens={itens}
         />
 
-        <Actions handlePageChange={handlePageChange} page={page} textButton={"Cadastrar Nível"} />
+        <Actions
+          handlePageChange={handlePageChange}
+          page={page}
+          textButton={"Cadastrar Nível"}
+          entity="nivel"
+        />
 
         <Table striped bordered responsive>
-          <TableHeader handleSortChange={handleSortChange} />
+          <NivelTableHeader handleSortChange={handleSortChange} />
           <tbody>
             {nivelRes?.data.map((nivel: INivel) => (
-              <TableRow
+              <NivelTableRow
                 key={nivel.id}
                 nivel={nivel}
                 handleEdit={handleEdit}

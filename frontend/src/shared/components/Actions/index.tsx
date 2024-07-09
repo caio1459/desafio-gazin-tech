@@ -1,14 +1,20 @@
-import React, { useState } from "react"
-import { Button, Pagination } from "react-bootstrap"
-import { NivelModal } from "../NivelModal"
+import React, { useState } from "react";
+import { Button, Pagination } from "react-bootstrap";
+import { NivelModal } from "../NivelModal";
 
 interface IActionsProps {
-  handlePageChange: (page: number) => void
-  page: number
-  textButton: string
+  handlePageChange: (page: number) => void;
+  page: number;
+  textButton: string;
+  entity: string;
 }
 
-export const Actions: React.FC<IActionsProps> = ({ handlePageChange, page, textButton }) => {
+export const Actions: React.FC<IActionsProps> = ({
+  handlePageChange,
+  page,
+  textButton,
+  entity,
+}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -16,11 +22,16 @@ export const Actions: React.FC<IActionsProps> = ({ handlePageChange, page, textB
 
   return (
     <>
-      <NivelModal show={show} handleClose={handleClose} />
-
+      {entity === "nivel" ? (
+        <NivelModal show={show} handleClose={handleClose} />
+      ) : (
+        <></>
+      )}
       <div className="d-flex justify-content-between mb-2">
         <Pagination>
-          <Pagination.Prev onClick={() => handlePageChange(page > 1 ? page - 1 : 1)} />
+          <Pagination.Prev
+            onClick={() => handlePageChange(page > 1 ? page - 1 : 1)}
+          />
           <Pagination.Item>{page}</Pagination.Item>
           <Pagination.Next onClick={() => handlePageChange(page + 1)} />
         </Pagination>
@@ -33,5 +44,5 @@ export const Actions: React.FC<IActionsProps> = ({ handlePageChange, page, textB
         </div>
       </div>
     </>
-  )
-}
+  );
+};

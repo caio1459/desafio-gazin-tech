@@ -13,7 +13,11 @@ interface INivelModalProps {
   nivelToEdit?: INivel | null;
 }
 
-export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nivelToEdit }) => {
+export const NivelModal: React.FC<INivelModalProps> = ({
+  handleClose,
+  show,
+  nivelToEdit,
+}) => {
   const queryClient = useQueryClient();
   const [nivel, setNivel] = useState(nivelToEdit ? nivelToEdit.nivel : "");
   const [loading, setLoading] = useState(false);
@@ -31,7 +35,10 @@ export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nive
       setLoading(true);
       let response;
       if (nivelToEdit) {
-        response = await NivelService.updateNivel({ nivel, id: nivelToEdit.id }, nivelToEdit.id);
+        response = await NivelService.updateNivel(
+          { nivel, id: nivelToEdit.id },
+          nivelToEdit.id
+        );
       } else {
         response = await NivelService.createNivel({ nivel });
       }
@@ -40,7 +47,7 @@ export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nive
     },
     onSuccess: (data) => {
       if (data instanceof ErroException) {
-        setToast(true)
+        setToast(true);
         const errorResponse = data;
         if (errorResponse.errors) {
           const errors = Object.values(errorResponse.errors).flat();
@@ -58,27 +65,29 @@ export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nive
 
   const handleSave = () => {
     setErrorMessages([]);
-    setToast(false)
+    setToast(false);
     mutation.mutate();
   };
 
   return (
     <>
-      {
-        errorMessages.length > 0 && (
-          errorMessages.map((msg, i) => (
-            <CustomToast
-              key={i}
-              visible={toast}
-              title={nivelToEdit ? "Erro ao editar nivel" : "Erro ao cadastrar nivel"}
-              text={msg} />
-          ))
-        )
-      }
+      {errorMessages.length > 0 &&
+        errorMessages.map((msg, i) => (
+          <CustomToast
+            key={i}
+            visible={toast}
+            title={
+              nivelToEdit ? "Erro ao editar nivel" : "Erro ao cadastrar nivel"
+            }
+            text={msg}
+          />
+        ))}
       <Loading loading={loading} />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{nivelToEdit ? "Editar Nível" : "Cadastrar Nível"}</Modal.Title>
+          <Modal.Title>
+            {nivelToEdit ? "Editar Nível" : "Cadastrar Nível"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -89,7 +98,7 @@ export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nive
                 placeholder="Nome do nível"
                 autoFocus
                 value={nivel}
-                onChange={e => setNivel(e.target.value)}
+                onChange={(e) => setNivel(e.target.value)}
               />
             </Form.Group>
           </Form>
