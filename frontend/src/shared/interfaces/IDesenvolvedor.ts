@@ -11,7 +11,8 @@ export interface IDesenvolvedor {
   nome: string;
   hobby: string;
   sexo: string;
-  data_nascimento: Date;
-  nivel: INivel;
-  idade: number;
+  data_nascimento: string;
+  nivel?: INivel;
+  nivel_id?: number;
+  idade?: number;
 }

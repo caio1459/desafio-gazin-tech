@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { useMutation, useQueryClient } from "react-query";
-import NivelService from "../../services/niveis/NivelService";
 import { Loading } from "../Loading";
-import { ErroException } from "../../services/api/ErrorException";
 import { CustomToast } from "../CustomToast";
 import { INivel } from "../../interfaces/INivel";
+import { useNiveis } from "../../hooks/useNiveis";
 
 interface INivelModalProps {
   show: boolean;
@@ -13,61 +11,14 @@ interface INivelModalProps {
   nivelToEdit?: INivel | null;
 }
 
-export const NivelModal: React.FC<INivelModalProps> = ({
-  handleClose,
-  show,
-  nivelToEdit,
-}) => {
-  const queryClient = useQueryClient();
-  const [nivel, setNivel] = useState(nivelToEdit ? nivelToEdit.nivel : "");
-  const [loading, setLoading] = useState(false);
-  const [errorMessages, setErrorMessages] = useState<string[]>([]);
-  const [toast, setToast] = useState(false);
+export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nivelToEdit }) => {
+  const { nivel, setNivel, loading, errorMessages, toast, handleSave } = useNiveis();
 
   useEffect(() => {
     if (nivelToEdit) {
       setNivel(nivelToEdit.nivel);
     }
-  }, [nivelToEdit]);
-
-  const mutation = useMutation({
-    mutationFn: async () => {
-      setLoading(true);
-      let response;
-      if (nivelToEdit) {
-        response = await NivelService.updateNivel(
-          { nivel, id: nivelToEdit.id },
-          nivelToEdit.id
-        );
-      } else {
-        response = await NivelService.createNivel({ nivel });
-      }
-      setLoading(false);
-      return response;
-    },
-    onSuccess: (data) => {
-      if (data instanceof ErroException) {
-        setToast(true);
-        const errorResponse = data;
-        if (errorResponse.errors) {
-          const errors = Object.values(errorResponse.errors).flat();
-          setErrorMessages(errors);
-        } else {
-          setErrorMessages([errorResponse.message]);
-        }
-      } else {
-        queryClient.invalidateQueries({ queryKey: ["niveis"] });
-        setNivel("");
-        handleClose();
-      }
-    },
-  });
-
-  const handleSave = () => {
-    setErrorMessages([]);
-    setToast(false);
-    mutation.mutate();
-  };
+  }, [nivelToEdit, setNivel]);
 
   return (
     <>
@@ -76,9 +27,7 @@ export const NivelModal: React.FC<INivelModalProps> = ({
           <CustomToast
             key={i}
             visible={toast}
-            title={
-              nivelToEdit ? "Erro ao editar nivel" : "Erro ao cadastrar nivel"
-            }
+            title={nivelToEdit ? "Erro ao editar nível" : "Erro ao cadastrar nível"}
             text={msg}
           />
         ))}
@@ -107,7 +56,7 @@ export const NivelModal: React.FC<INivelModalProps> = ({
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={handleSave}>
+          <Button variant="primary" onClick={() => handleSave(nivelToEdit, handleClose)}>
             Salvar
           </Button>
         </Modal.Footer>

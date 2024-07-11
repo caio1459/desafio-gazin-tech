@@ -22,10 +22,19 @@ class MessageService {
         Swal.fire({
           title: confirmMessage,
           icon: "success",
-          timer: 1500,
+          timer: 3000,
           showConfirmButton: false,
         });
       }
+    });
+  }
+
+  async sucess(message: string) {
+    await Swal.fire({
+      title: message,
+      icon: "success",
+      timer: 3000,
+      showConfirmButton: false,
     });
   }
 }

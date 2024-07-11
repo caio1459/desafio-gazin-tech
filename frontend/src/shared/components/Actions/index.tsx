@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Pagination } from "react-bootstrap";
 import { NivelModal } from "../NivelModal";
+import { DevModal } from "../DevModal";
 
 interface IActionsProps {
   handlePageChange: (page: number) => void;
@@ -25,7 +26,7 @@ export const Actions: React.FC<IActionsProps> = ({
       {entity === "nivel" ? (
         <NivelModal show={show} handleClose={handleClose} />
       ) : (
-        <></>
+        <DevModal show={show} handleClose={handleClose} />
       )}
       <div className="d-flex justify-content-between mb-2">
         <Pagination>

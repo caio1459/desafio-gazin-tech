@@ -1,75 +1,37 @@
 import { Table } from "react-bootstrap";
 import { Loading } from "../../shared/components/Loading";
-import { useState } from "react";
-import MessageService from "../../shared/services/messages/MessageService";
-import NivelService from "../../shared/services/niveis/NivelService";
 import { Filters } from "../../shared/components/Filters";
 import { Actions } from "../../shared/components/Actions";
 import { NivelModal } from "../../shared/components/NivelModal";
 import { INivel } from "../../shared/interfaces/INivel";
+import { NivelTableHeader, NivelTableRow } from "../../shared/components/NivelTable";
 import { useNiveis } from "../../shared/hooks/useNiveis";
-import {
-  NivelTableHeader,
-  NivelTableRow,
-} from "../../shared/components/NivelTable";
 
 export const Niveis = () => {
-  const [nivelToEdit, setNivelToEdit] = useState<INivel | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
 
   const {
     page,
     itens,
-    sort,
-    order,
     idFilter,
     nivelFilter,
     nivelRes,
     isLoading,
-    queryClient,
     setIdFilter,
     setNivelFilter,
     handleSortChange,
     handlePageChange,
     handleItemsPerPageChange,
+    handleDelete,
+    loading,
+    show,
+    handleClose,
+    nivelToEdit,
+    handleEdit
   } = useNiveis();
-
-  const handleDelete = async (id: number) => {
-    setLoading(true);
-    MessageService.confirm(
-      "Deseja deletar esse nível?",
-      "Nível deletado com sucesso!",
-      async () => {
-        await NivelService.deleteNivel(id);
-        await queryClient.invalidateQueries([
-          "niveis",
-          page,
-          itens,
-          sort,
-          order,
-          idFilter,
-          nivelFilter,
-        ]);
-      }
-    ).finally(() => {
-      setLoading(false);
-    });
-  };
-
-  const handleEdit = (nivel: INivel) => {
-    setShow(true);
-    setNivelToEdit(nivel);
-  };
 
   return (
     <>
-      <NivelModal
-        show={show}
-        handleClose={handleClose}
-        nivelToEdit={nivelToEdit}
-      />
+      <NivelModal show={show} handleClose={handleClose} nivelToEdit={nivelToEdit} />
       <Loading loading={isLoading || loading} />
 
       <div className="container mt-1">
