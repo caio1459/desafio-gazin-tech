@@ -121,7 +121,7 @@ class NivelController extends Controller
      */
     public function index(PaginationRequest $request)
     {
-        $query = Nivel::query();
+        $query = Nivel::query()->withCount('desenvolvedor');
         $camposFiltrados = ['id', 'nivel'];
         $result = $this->paginationService->paginate($request, $query, $camposFiltrados);
 

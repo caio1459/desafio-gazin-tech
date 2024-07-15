@@ -180,40 +180,6 @@
             }
         },
         "/api/desenvolvedores/{id}": {
-            "get": {
-                "tags": [
-                    "Desenvolvedores"
-                ],
-                "summary": "Retorna um desenvolvedor específico",
-                "description": "Retorna os dados de um desenvolvedor específico",
-                "operationId": "d6961ab70601db87b4dac05e7308e029",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID do desenvolvedor",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Dados do desenvolvedor",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Desenvolvedor"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Desenvolvedor não encontrado"
-                    }
-                }
-            },
             "put": {
                 "tags": [
                     "Desenvolvedores"
@@ -564,6 +530,10 @@
                     "nivel": {
                         "description": "Nome do nível",
                         "type": "string"
+                    },
+                    "devs_count": {
+                        "description": "Quantidade de desenvolvedores associados",
+                        "type": "integer"
                     }
                 },
                 "type": "object"

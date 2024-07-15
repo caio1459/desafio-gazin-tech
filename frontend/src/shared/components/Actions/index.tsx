@@ -10,12 +10,7 @@ interface IActionsProps {
   entity: string;
 }
 
-export const Actions: React.FC<IActionsProps> = ({
-  handlePageChange,
-  page,
-  textButton,
-  entity,
-}) => {
+export const Actions: React.FC<IActionsProps> = ({ handlePageChange, page, textButton, entity }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

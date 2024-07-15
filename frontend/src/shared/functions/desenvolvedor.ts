@@ -29,3 +29,12 @@ export const fetchDevs = async (
   }
   return res;
 };
+
+
+// Calcula a data de nascimento
+export const getBirthDate = (age: number): string => {
+  const currentYear = new Date().getFullYear();
+  const birthYear = currentYear - age;
+  const birthDate = new Date(birthYear, 0, 1).toISOString().split("T")[0];
+  return birthDate;
+};

@@ -12,6 +12,7 @@ export const NivelTableHeader: React.FC<INivelTableHeaderProps> = ({ handleSortC
     columns={[
       { key: 'id', label: 'ID' },
       { key: 'nivel', label: 'Nível' },
+      { key: 'devs_count', label: 'Devs Associados' }
     ]}
     handleSortChange={handleSortChange}
   />
@@ -20,7 +21,7 @@ export const NivelTableHeader: React.FC<INivelTableHeaderProps> = ({ handleSortC
 interface INivelTableRowProps {
   nivel: INivel;
   handleEdit: (nivel: INivel) => void;
-  handleDelete: (id: number) => void;
+  handleDelete: (nivel: INivel) => void;
 }
 
 export const NivelTableRow: React.FC<INivelTableRowProps> = ({ nivel, handleEdit, handleDelete }) => (
@@ -29,8 +30,9 @@ export const NivelTableRow: React.FC<INivelTableRowProps> = ({ nivel, handleEdit
     columns={[
       { key: 'id' },
       { key: 'nivel' },
+      { key: 'devs_count' }
     ]}
     handleEdit={handleEdit}
-    handleDelete={handleDelete}
+    handleDelete={() => handleDelete(nivel)}
   />
 );

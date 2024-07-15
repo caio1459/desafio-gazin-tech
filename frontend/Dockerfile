@@ -1,19 +1,19 @@
-FROM node:18 as build
+# Use a imagem Alpine do Node.js 18
+FROM node:18-alpine
 
 WORKDIR /app
 
+# Copie apenas os arquivos de definição de pacote
 COPY package*.json ./
 
-RUN npm install
+# Instale dependências
+RUN npm install --no-cache
 
+# Copie o restante dos arquivos
 COPY . .
 
-RUN npm run build
+# Exponha a porta que o Vite utiliza no modo de desenvolvimento
+EXPOSE 5173
 
-FROM nginx:alpine
-
-COPY --from=build /app/dist usr/share/nginx/html
-
-EXPOSE 3000
-
-CMD [ "nginx", "-g", "daemon off;" ]
+# Comando para iniciar o ambiente de desenvolvimento
+CMD ["npm", "run", "dev"]

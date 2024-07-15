@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "serve": "tsc && vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "repair": "rm -rf node_modules package-lock.json && npm install"
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",

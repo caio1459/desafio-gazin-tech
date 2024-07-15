@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { fetchDevs } from "../functions/desenvolvedor";
 import DesenvolvedorService from "../services/desenvolvedor/DesenvolvedorService";
@@ -7,6 +7,7 @@ import { IDesenvolvedor, IDesenvolvedorRes } from "../interfaces/IDesenvolvedor"
 import MessageService from "../services/messages/MessageService";
 
 export const useDevs = () => {
+  // Filtros de páginação
   const [page, setPage] = useState<number>(1);
   const [itens, setItens] = useState<number>(5);
   const [sort, setSort] = useState<string>("id");
@@ -28,9 +29,10 @@ export const useDevs = () => {
   const [loading, setLoading] = useState(false);
   const [devToEdit, setDevToEdit] = useState<IDesenvolvedor | null>(null);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
 
   const queryClient = useQueryClient();
+
+  const handleClose = () => setShow(false);
 
   const { data: devRes, isLoading } = useQuery<IDesenvolvedorRes>(
     [
@@ -57,8 +59,14 @@ export const useDevs = () => {
         sexoFilter,
         nivelIdFilter
       ),
-    { keepPreviousData: true }
+    {
+      onSettled: () => setLoading(false),
+    }
   );
+
+  useEffect(() => {
+    setLoading(true);
+  }, [page, itens, sort, order, idFilter, nomeFilter, hobbyFilter, sexoFilter, nivelIdFilter]);
 
   const mutation = useMutation({
     mutationFn: async ({ devToEdit }: { devToEdit?: IDesenvolvedor | null, handleClose?: () => void }) => {
@@ -90,16 +98,16 @@ export const useDevs = () => {
         } else {
           setErrorMessages([errorResponse.message]);
         }
-        setLoading(false);
       } else {
         await queryClient.invalidateQueries("desenvolvedores").finally(() => {
           setLoading(false);
           reset();
-          MessageService.sucess(message)
+          MessageService.success(message);
           handleClose && handleClose();
         });
       }
     },
+    onSettled: () => queryClient.invalidateQueries("desenvolvedores")
   });
 
   const handleSave = (devToEdit?: IDesenvolvedor | null, handleClose?: () => void) => {
@@ -117,9 +125,7 @@ export const useDevs = () => {
         await DesenvolvedorService.deleteDev(id);
         await queryClient.invalidateQueries("desenvolvedores");
       }
-    ).finally(() => {
-      setLoading(false);
-    });
+    ).finally(() => setLoading(false));
   };
 
   const handleEdit = (dev: IDesenvolvedor) => {
@@ -134,9 +140,7 @@ export const useDevs = () => {
 
   const handlePageChange = (newPage: number) => setPage(newPage);
 
-  const handleItemsPerPageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleItemsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setItens(parseInt(event.target.value, 10));
     setPage(1);
   };

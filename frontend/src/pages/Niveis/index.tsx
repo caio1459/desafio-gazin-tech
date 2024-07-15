@@ -6,6 +6,7 @@ import { NivelModal } from "../../shared/components/NivelModal";
 import { INivel } from "../../shared/interfaces/INivel";
 import { NivelTableHeader, NivelTableRow } from "../../shared/components/NivelTable";
 import { useNiveis } from "../../shared/hooks/useNiveis";
+import { CustomToast } from "../../shared/components/CustomToast";
 
 export const Niveis = () => {
 
@@ -26,11 +27,22 @@ export const Niveis = () => {
     show,
     handleClose,
     nivelToEdit,
-    handleEdit
+    handleEdit,
+    toast,
+    errorMessages
   } = useNiveis();
 
   return (
     <>
+      {errorMessages.length > 0 &&
+        errorMessages.map((msg, i) => (
+          <CustomToast
+            key={i}
+            visible={toast}
+            title={"Erro ao excluir desenvolvedor!"}
+            text={msg}
+          />
+        ))}
       <NivelModal show={show} handleClose={handleClose} nivelToEdit={nivelToEdit} />
       <Loading loading={isLoading || loading} />
 

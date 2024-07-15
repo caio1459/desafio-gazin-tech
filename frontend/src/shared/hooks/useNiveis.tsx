@@ -7,14 +7,13 @@ import { INivel, INivelRes } from "../interfaces/INivel";
 import MessageService from "../services/messages/MessageService";
 
 export const useNiveis = () => {
-  //Filtros de paginas
+  // Filtros de páginação
   const [page, setPage] = useState<number>(1);
   const [itens, setItens] = useState<number>(2);
   const [sort, setSort] = useState<string>("id");
   const [order, setOrder] = useState<string>("asc");
   const [idFilter, setIdFilter] = useState<string>("");
   const [nivelFilter, setNivelFilter] = useState<string>("");
-
 
   const [allNiveis, setAllNiveis] = useState<INivelRes | null>(null);
   const [nivel, setNivel] = useState<string>("");
@@ -32,7 +31,7 @@ export const useNiveis = () => {
   const { data: nivelRes, isLoading } = useQuery<INivelRes>(
     ["niveis", page, itens, sort, order, idFilter, nivelFilter],
     () => fetchNiveis(page, itens, sort, order, idFilter, nivelFilter),
-    { keepPreviousData: true }
+    { onSettled: () => setLoading(false) }
   );
 
   const fetchAllNiveis = async () => {
@@ -41,24 +40,26 @@ export const useNiveis = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
+  }, [page, itens, sort, order, idFilter, nivelFilter])
+
+  useEffect(() => {
     fetchAllNiveis();
   }, []);
 
   const mutation = useMutation({
     mutationFn: async ({ nivelToEdit }: { nivelToEdit?: INivel | null, handleClose?: () => void }) => {
       setLoading(true);
-      let response;
       if (nivelToEdit) {
-        setMessage("Nivel atualizado com sucesso!")
-        response = await NivelService.updateNivel(
+        setMessage("Nível atualizado com sucesso!");
+        return await NivelService.updateNivel(
           { nivel, id: nivelToEdit.id },
           nivelToEdit.id
         );
       } else {
-        setMessage("Nivel criado com sucesso!")
-        response = await NivelService.createNivel({ nivel });
+        setMessage("Nível criado com sucesso!");
+        return await NivelService.createNivel({ nivel });
       }
-      return response;
     },
     onSuccess: async (data, { handleClose }) => {
       if (data instanceof ErroException) {
@@ -75,12 +76,11 @@ export const useNiveis = () => {
         await queryClient.invalidateQueries("niveis").finally(() => {
           setLoading(false);
           setNivel("");
-          MessageService.sucess(message)
+          MessageService.success(message);
           handleClose && handleClose();
         });
       }
     },
-    //Atualiza o estado
     onSettled: () => queryClient.invalidateQueries("niveis")
   });
 
@@ -102,21 +102,32 @@ export const useNiveis = () => {
     setPage(1);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (nivel: INivel) => {
+    if (nivel.devs_count !== undefined && nivel.devs_count > 0) {
+      MessageService.error("Exclusão não permitida a um nivel associado")
+      return
+    }
     setLoading(true);
     MessageService.confirm(
       "Deseja deletar esse nível?",
-      "Nível deletado com sucesso!",
+      "Nivel deletado com sucesso!",
       async () => {
-        await NivelService.deleteNivel(id);
+        await NivelService.deleteNivel(nivel.id);
         await queryClient.invalidateQueries("niveis");
-      }
+      },
+      () => setLoading(false)
     ).finally(() => setLoading(false));
   };
 
   const handleEdit = (nivel: INivel) => {
     setShow(true);
     setNivelToEdit(nivel);
+  };
+
+  const getTotalNivelToDev = (): number => {
+    return allNiveis?.data.reduce((count, nivel) => {
+      return count + (nivel.devs_count !== undefined && nivel.devs_count > 0 ? 1 : 0);
+    }, 0) || 0;
   };
 
   return {
@@ -147,6 +158,7 @@ export const useNiveis = () => {
     show,
     handleClose,
     nivelToEdit,
-    handleEdit
+    handleEdit,
+    getTotalNivelToDev
   };
 };

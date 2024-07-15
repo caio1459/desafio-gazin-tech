@@ -30,7 +30,6 @@ Route::prefix('niveis')->group(function () {
 Route::prefix('desenvolvedores')->group(function () {
     Route::post('/', [DesenvolvedorController::class, 'store'])->name('desenvolvedores.store');
     Route::get('/', [DesenvolvedorController::class, 'index'])->name('desenvolvedores.index');
-    Route::get('/{id}', [DesenvolvedorController::class, 'show'])->name('desenvolvedores.show');
     Route::put('/{id}', [DesenvolvedorController::class, 'update'])->name('desenvolvedores.update');
     Route::delete('/{id}', [DesenvolvedorController::class, 'destroy'])->name('desenvolvedores.destroy');
 });

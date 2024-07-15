@@ -13,17 +13,17 @@ export const TableRow = <T extends { id: number }>({
   handleEdit,
   handleDelete,
 }: TableRowProps<T>) => (
-  <tr key={item.id}>
+  <tr key={item.id} className="align-middle">
     {columns.map(column => (
-      <td key={String(column.key)}>
+      <td key={String(column.key)} className="table-cell">
         {column.render ? column.render(item[column.key]) : String(item[column.key])}
       </td>
     ))}
-    <td>
-      <button type="button" className="btn btn-info me-1" onClick={() => handleEdit(item)}>
+    <td className="text-center">
+      <button type="button" className="btn btn-info btn-sm me-1" onClick={() => handleEdit(item)}>
         <i className="bi bi-pencil-square"></i>
       </button>
-      <button type="button" className="btn btn-danger" onClick={() => handleDelete(item.id)}>
+      <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(item.id)}>
         <i className="bi bi-trash"></i>
       </button>
     </td>

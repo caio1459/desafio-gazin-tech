@@ -12,6 +12,6 @@ export const Loading: React.FC<ILoadingProps> = ({ loading }) => {
       <div className={style.container}>
         <Spinner animation="border" />
       </div>
-    ) : null
+    ) : <></>
   );
 };

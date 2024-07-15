@@ -12,7 +12,7 @@ interface INivelModalProps {
 }
 
 export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nivelToEdit }) => {
-  const { nivel, setNivel, loading, errorMessages, toast, handleSave } = useNiveis();
+  const { nivel, setNivel, loading, isLoading, errorMessages, toast, handleSave } = useNiveis();
 
   useEffect(() => {
     if (nivelToEdit) {
@@ -31,7 +31,7 @@ export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nive
             text={msg}
           />
         ))}
-      <Loading loading={loading} />
+      <Loading loading={loading || isLoading} />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -56,7 +56,11 @@ export const NivelModal: React.FC<INivelModalProps> = ({ handleClose, show, nive
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={() => handleSave(nivelToEdit, handleClose)}>
+          <Button
+            variant="primary"
+            onClick={() => handleSave(nivelToEdit, handleClose)}
+            disabled={loading || isLoading}
+          >
             Salvar
           </Button>
         </Modal.Footer>

@@ -12,8 +12,10 @@ export const DevTableHeader: React.FC<IDevTableHeaderProps> = ({ handleSortChang
     columns={[
       { key: 'id', label: 'ID' },
       { key: 'nome', label: 'Nome' },
+      { key: 'idade', label: 'Idade' },
       { key: 'sexo', label: 'Sexo' },
       { key: 'nivel_id', label: 'Nível' },
+      { key: 'hobby', label: 'Hobby' },
     ]}
     handleSortChange={handleSortChange}
   />
@@ -25,14 +27,20 @@ interface IDevTableRowProps {
   handleDelete: (id: number) => void;
 }
 
-export const DevTableRow: React.FC<IDevTableRowProps> = ({ desenvolvedor, handleEdit, handleDelete }) => (
+export const DevTableRow: React.FC<IDevTableRowProps> = ({
+  desenvolvedor,
+  handleEdit,
+  handleDelete
+}) => (
   <TableRow
     item={desenvolvedor}
     columns={[
       { key: 'id' },
       { key: 'nome' },
+      { key: 'idade' },
       { key: 'sexo' },
       { key: 'nivel', render: (nivel) => nivel.nivel },
+      { key: 'hobby' }
     ]}
     handleEdit={handleEdit}
     handleDelete={handleDelete}

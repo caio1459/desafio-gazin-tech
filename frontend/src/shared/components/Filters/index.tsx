@@ -39,14 +39,14 @@ export const Filters: React.FC<IFiltersProps> = ({
       <Card.Body>
         <Card.Title>Filtros</Card.Title>
         <Form>
-          <Row>
+          <Row className="g-3">
             {idFilter !== undefined && setIdFilter && (
               <Col md={2}>
                 <Form.Group controlId="formID">
                   <Form.Label>ID</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder={"Filtrar por ID"}
+                    placeholder="Filtrar por ID"
                     value={idFilter}
                     onChange={(e) => setIdFilter(e.target.value)}
                   />
@@ -59,7 +59,7 @@ export const Filters: React.FC<IFiltersProps> = ({
                   <Form.Label>Nível</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder={"Filtrar por nível"}
+                    placeholder="Filtrar por nível"
                     value={nivelFilter}
                     onChange={(e) => setNivelFilter(e.target.value)}
                   />
@@ -72,7 +72,7 @@ export const Filters: React.FC<IFiltersProps> = ({
                   <Form.Label>Nome</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder={"Filtrar por nome"}
+                    placeholder="Filtrar por nome"
                     value={nomeFilter}
                     onChange={(e) => setNomeFilter(e.target.value)}
                   />
@@ -85,7 +85,7 @@ export const Filters: React.FC<IFiltersProps> = ({
                   <Form.Label>Hobby</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder={"Filtrar por hobby"}
+                    placeholder="Filtrar por hobby"
                     value={hobbyFilter}
                     onChange={(e) => setHobbyFilter(e.target.value)}
                   />
@@ -114,7 +114,7 @@ export const Filters: React.FC<IFiltersProps> = ({
                   <Form.Label>Nível ID</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder={"Filtrar por nível ID"}
+                    placeholder="Filtrar por nível ID"
                     value={nivelIdFilter}
                     onChange={(e) => setNivelIdFilter(e.target.value)}
                   />
@@ -129,10 +129,10 @@ export const Filters: React.FC<IFiltersProps> = ({
                   value={itens.toString()}
                   aria-label="Items por página"
                 >
-                  <option value="2">2 items por página</option>
-                  <option value="5">5 items por página</option>
-                  <option value="10">10 items por página</option>
-                  <option value="20">20 items por página</option>
+                  <option value="2">2 itens por página</option>
+                  <option value="5">5 itens por página</option>
+                  <option value="10">10 itens por página</option>
+                  <option value="20">20 itens por página</option>
                 </Form.Select>
               </Form.Group>
             </Col>

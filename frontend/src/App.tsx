@@ -1,13 +1,16 @@
 import { Outlet } from "react-router-dom"
-import { Dashboard } from "./shared/components/Dashboard"
+import { Header } from "./shared/components/Header"
 
 
 function App() {
   return (
     <>
-      <Dashboard>
-        <Outlet />
-      </Dashboard>
+      <Header />
+      <main className=" main-content bg-light">
+        <div className="p-4 rounded shadow-sm bg-white">
+          <Outlet />
+        </div>
+      </main>
     </>
   )
 }

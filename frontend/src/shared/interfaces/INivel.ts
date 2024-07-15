@@ -8,4 +8,5 @@ export interface INivelRes {
 export interface INivel {
   id: number;
   nivel: string;
+  devs_count?: number;
 }

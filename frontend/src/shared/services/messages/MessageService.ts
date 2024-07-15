@@ -4,7 +4,8 @@ class MessageService {
   confirm(
     title: string,
     confirmMessage: string,
-    onConfirm: () => void
+    onConfirm: () => void,
+    onCancel?: () => void
   ): Promise<void> {
     return Swal.fire({
       title: title,
@@ -25,14 +26,25 @@ class MessageService {
           timer: 3000,
           showConfirmButton: false,
         });
+      } else if (result.isDismissed && onCancel) {
+        onCancel();
       }
     });
   }
 
-  async sucess(message: string) {
+  async success(message: string) {
     await Swal.fire({
       title: message,
       icon: "success",
+      timer: 3000,
+      showConfirmButton: false,
+    });
+  }
+
+  async error(message: string) {
+    await Swal.fire({
+      title: message,
+      icon: "error",
       timer: 3000,
       showConfirmButton: false,
     });

@@ -186,41 +186,6 @@ class DesenvolvedorController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/desenvolvedores/{id}",
-     *     summary="Retorna um desenvolvedor específico",
-     *     description="Retorna os dados de um desenvolvedor específico",
-     *     tags={"Desenvolvedores"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID do desenvolvedor",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Dados do desenvolvedor",
-     *         @OA\JsonContent(ref="#/components/schemas/Desenvolvedor")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Desenvolvedor não encontrado"
-     *     )
-     * )
-     */
-    public function show(string $id)
-    {
-        try {
-            $dev = $this->desenvolvedorService->verificarDev($id);
-            $dev->load('nivel');
-            return new DesenvolvedorResource($dev);
-        } catch (CustomRequestException $e) {
-            return $e->render();
-        }
-    }
-
-    /**
      * @OA\Put(
      *     path="/api/desenvolvedores/{id}",
      *     summary="Atualiza um desenvolvedor existente",

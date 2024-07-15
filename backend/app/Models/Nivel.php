@@ -21,6 +21,11 @@ use OpenApi\Annotations as OA;
  *         property="nivel",
  *         type="string",
  *         description="Nome do nível"
+ *     ),
+ *     @OA\Property(
+ *         property="devs_count",
+ *         type="integer",
+ *         description="Quantidade de desenvolvedores associados"
  *     )
  * )
  */
